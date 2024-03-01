@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>WISO</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="shortcut icon" href="#" />
+  <link rel="stylesheet" href="styles/style.css">
+  <!-- <link rel="stylesheet" href="styles/style.css" -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body style="background-color: #00063f;">
+
+
+  <div class="chatbot-toggler" style="background-image: url(styles/images/chatbot_1.png)" onclick="toggleChatbot()">
+    
+    
+  </div>
+
+    <section class="msger">
+      <header class="msger-header">
+        <div class="msger-header-title">
+          </i>Chatbot Demo</i>
+        </div>
+        <div class="close-icon" onclick="toggleChatbot()">✖</div>
+      </header>
+  
+      <main class="msger-chat">
+        <div class="msg left-msg">
+          <div class="msg-img" style="background-image: url(styles/images/chatbot_1.png)"></div>
+  
+          <div class="msg-bubble">
+            <div class="msg-info">
+              <div class="msg-info-name">WISO</div>
+              <div class="msg-info-time"></div>
+            </div>
+  
+            <div class="msg-text">
+              Hi!👋 I am WISO. How can I help you today? <br><br>
+               <div class="container">
+                <button class="image-button" id='button_ext'>
+                  <img src="styles/images/about_icon.png" alt="Image">
+                  <span>About Suryadatta</span>
+                </button>
+              </div>
+                <br>
+                <div class="container">
+                  <button class="image-button" id='button_ext'>
+                    <img src="styles/images/book_icon.png" alt="Image">
+                    <span>Courses Offered</span>
+                  </button>
+                </div>
+                <br> 
+                <div class="container">
+                  <button class="image-button" id='button_ext'>
+                    <img src="styles/images/admission_icon.png" alt="Image">
+                    <span>Admission Details</span>
+                  </button>
+                </div>
+                <br> 
+                <div class="container">
+                  <button class="image-button" id='button_ext'>
+                    <img src="styles/images/applu_icon.png" alt="Image">
+                    <span>Placements</span>
+                  </button>
+                </div>
+                <br> 
+                <div class="container">
+                  <button class="image-button" id='button_ext'>
+                    <img src="styles/images/student_icon.png" alt="Image">
+                    <span>Student Life</span>
+                  </button>
+                </div>
+                <br>
+                <div class="container">
+                  <button class="image-button" id='button_ext'>
+                    <img src="styles/images/events_icon.png" alt="Image">
+                    <span>Events</span>
+                  </button>
+                </div>
+                <br>
+                <div class="container">
+                  <button class="image-button" id='button_ext'>
+                    <img src="styles/images/contact_icon.png" alt="Image">
+                    <span>Contact Details</span>
+                  </button>
+                </div>
+                <br>
+                <div class="container">
+                  <button class="image-button" id='button_ext'>
+                    <img src="styles/images/online_icon.png" alt="Image">
+                    <span>Apply Online</span>
+                  </button>
+                </div>
+                <br>
+                <div class='container'>
+                  <button class='image-button' id='button_ext'>
+                    <img src='styles/images/online_icon.png' alt='Image'>
+                    <span>Book Appointment</span>
+                  </button>
+                </div>
+            </div>
+            
+          </div>
+        </div>
+  
+      </main>
+  
+      <form class="msger-inputarea">
+        <input type="text" class="msger-input" id="textInput" placeholder="Enter your message...">
+        <button type="submit" class="msger-send-btn">
+          <img src="styles/images/send_icon.png" alt="Send Icon">
+      </button>
+      </form>
+    </section>
+
+
+  
+  <!-- partial:index.partial.html -->
+  
+  <!-- partial -->
+  <script src='https://use.fontawesome.com/releases/v5.0.13/js/all.js'></script>
+  <script>
+
+    const msgerForm = get(".msger-inputarea");
+    const msgerInput = get(".msger-input");
+    const msgerChat = get(".msger-chat");
+
+    const typingAnimation = `
+    <div class="msg left-msg typing-animation">
+        <div class="msg-img"></div>
+
+        <div class="chat-bubble">
+            <div class="typing">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+    </div>
+    `;
+
+
+    // Icons made by Freepik from www.flaticon.com
+    const BOT_IMG = "styles/images/chatbot_1.png";
+    const BOT_NAME = "WISO";
+    const PERSON_IMG = "styles/images/person.png";
+    const PERSON_NAME = "You";
+
+
+    msgerForm.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const msgText = msgerInput.value;
+      if (!msgText) return;
+
+      appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
+      msgerInput.value = "";
+      botResponse(msgText);
+    });
+
+msgerChat.addEventListener("click", event => {
+  if (event.target.tagName === "BUTTON") {
+    const buttonId = event.target.id;
+    const buttonText = event.target.textContent.trim();              //ERRRORRRRRR
+    appendMessage(PERSON_NAME, PERSON_IMG, "right", buttonText);
+    if (buttonId === "button_int_slot_opt") {                        //button_int: does not ask bot for reply
+      console.log("int called")
+      msgerChat.insertAdjacentHTML("beforeend", typingAnimation);
+      msgerChat.scrollTop += 500;
+      
+
+    } else if (buttonId === "button_ext") {                          //button_ext: asks bot for reply
+      console.log("ext called")
+      // msgerChat.insertAdjacentHTML("beforeend", typingAnimation);
+      // msgerChat.scrollTop += 500;
+      botResponse(buttonText);
+    }
+
+  }
+});
+
+    function appendMessage(name, img, side, text) {
+      // Simple solution for small apps
+      
+    const msgHTML = `
+    <div class="msg ${side}-msg">
+        <div class="msg-img" style="background-image: url(${img})"></div>
+
+        <div class="msg-bubble">
+            <div class="msg-info">
+                <div class="msg-info-name">${name}</div>
+                <div class="msg-info-time">${formatDate(new Date())}</div>
+            </div>
+
+            <div class="msg-text" id="response-container">${text}</div>
+        </div>
+    </div>
+    `;
+    
+
+    if (side === "right") {
+        const typingAnimationElement = document.querySelector('.typing-animation');
+        msgerChat.insertAdjacentHTML("beforeend", msgHTML);
+        msgerChat.scrollTop += 500;
+    } else {
+        
+        msgerChat.scrollTop += 500;
+        // Select the typing animation using a class
+        const typingAnimationElement = document.querySelector('.typing-animation');
+
+        // setTimeout(() => {
+            // Remove the typing animation
+            if (typingAnimationElement) {
+                typingAnimationElement.remove();
+
+                // Show the actual message
+                msgerChat.insertAdjacentHTML("beforeend", msgHTML);
+                msgerChat.scrollTop += 500;
+            }
+        // }, 2000); // 2000 milliseconds (2 seconds)
+
+        msgerChat.scrollTop += 500;
+    }
+      
+    }
+
+function botResponse(rawText) {
+  msgerChat.insertAdjacentHTML("beforeend", typingAnimation);
+      msgerChat.scrollTop += 500;
+
+      $.ajax({
+      type: "POST",
+      url: "https://wiso-chatbot-server.onrender.com/get_response",
+      contentType: "application/json",
+      data: JSON.stringify({ user_input: rawText }),
+      success: function (data) {
+        console.log(rawText);
+        console.log(data);
+        const msgText = data.response; 
+        appendMessage(BOT_NAME, BOT_IMG, "left", msgText);
+      },
+    });
+
+}
+
+
+    // Utils
+    function get(selector, root = document) {
+      return root.querySelector(selector);
+    }
+
+    function formatDate(date) {
+      const h = "0" + date.getHours();
+      const m = "0" + date.getMinutes();
+
+      return `${h.slice(-2)}:${m.slice(-2)}`;
+    }
+
+    function toggleChatbot() {
+    var chatbotContainer = document.getElementsByClassName('msger')[0];
+    var chatbotToggleBtn = document.getElementsByClassName('chatbot-toggler')[0];
+
+    if (chatbotContainer.style.display === 'none' || !chatbotContainer.style.display) {
+        // If chatbot is hidden or not defined, show it
+        chatbotContainer.style.display = 'flex';
+        chatbotToggleBtn.style.display = 'none';
+    } else {
+        // If chatbot is visible, hide it
+        chatbotContainer.style.display = 'none';
+        chatbotToggleBtn.style.display = 'flex';
+    }
+}
+
+var time_slot_option = "Choose a time slot: <br><br><div class='container'><button class='image-button' id='button_int_slot_opt'><img src='styles/images/about_icon.png' alt='Image'><span>Slot 1</span></button></div><br><div class='container'><button class='image-button' id='button_int_slot_opt'><img src='styles/images/book_icon.png' alt='Image'><span>Slot 2</span></button></div>";
+var slot_booking_confirmation_msg = "Appointment Slot Booked Successfully";
+
+var resp_container = document.getElementById("response-container");
+
+$(document).on("submit", "#myForm", function (event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Perform AJAX request to submit the form data to the server
+    var choice = $("input[name='choice']:checked").val();
+    var formData = {
+      name: $("#name").val(),
+      email: $("#email").val(),
+      phone: $("#phone").val(),
+      slot: choice,
+    };
+
+    msgerChat.insertAdjacentHTML("beforeend", typingAnimation);
+    msgerChat.scrollTop += 500;
+    $.ajax({
+      
+      url: "https://wiso-chatbot-backend.onrender.com/submit_form",
+      type: "POST",
+      data: JSON.stringify(formData),
+      contentType: "application/json",
+      success: function (data) {
+        $("#result").text(data);
+        appendMessage(BOT_NAME, BOT_IMG, "left", slot_booking_confirmation_msg);
+        appendMessage(BOT_NAME, BOT_IMG, "left", "<div class='container'><button class='image-button' id='button_ext'><img src='styles/images/book_icon.png' alt='Image'><span>Main Menu</span></button></div>");
+      },
+      error: function (error) {
+        appendMessage(BOT_NAME, BOT_IMG, "left", "There was an error booking the slot");
+        console.error("Error:", error);
+      },
+    });
+  });
+
+</script>
+
+</body>
+
+</html>
+
